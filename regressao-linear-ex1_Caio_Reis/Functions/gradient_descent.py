@@ -56,7 +56,7 @@ def gradient_descent(X, y, theta, alpha, num_iters):
     # As demais linhas serão preenchidas com os parâmetros atualizados em cada iteração
     theta_history[0] = theta.copy()
 
-    for i in range():
+    for i in range(num_iters):
         # Calcula as previsões (hipótese) com base nos parâmetros atuais
         # A hipótese (predições) é calculada como o produto escalar entre a matriz de entrada X e o vetor de parâmetros theta
         predictions = X @ theta
