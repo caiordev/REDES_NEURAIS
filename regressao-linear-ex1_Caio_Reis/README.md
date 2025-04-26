@@ -83,6 +83,7 @@ regressao-linear-ex1_<SeuNome>/
 │
 ├─ README.md               # descrição do projeto
 ├─ regressao-linear-ex1.py # script principal
+├─ experimentos_comparativos.py # script para a comparação de valores
 ├─ ufma_logo.png           # logo da UFMA
 ├─ eng_comp_logo.png       # logo do curso
 ├─ REQUIREMENTS.txt        # bibliotecas necessárrias
@@ -98,6 +99,7 @@ regressao-linear-ex1_<SeuNome>/
 conda env create -f environment.yml
 conda activate regressao-linear-ex1
 python regressao-linear-ex1.py
+python experimentos_comparativos.py
 ```
 
 ### 🐍 Opção 2: Ambiente virtual com Python puro (mais genérico)
@@ -177,9 +179,9 @@ Dúvidas, estou à disposição por e-mail ou em sala.
 ## Reconhecimentos e Direitos Autorais
 
 ```
-@autor:                [Seu Nome]  
-@contato:              [Seu Email]  
-@data última versão:   20/04/2025  
+@autor:                Caio Reis Batista 
+@contato:              caio.reis@discente.ufma.br  
+@data última versão:   26/04/2025  
 @versão:               1.0  
 @outros repositórios:  [URLs opcionais]  
 @Agradecimentos:       Universidade Federal do Maranhão (UFMA),  
