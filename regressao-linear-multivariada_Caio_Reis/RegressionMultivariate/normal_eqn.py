@@ -30,4 +30,4 @@ def normal_eqn(X, y):
     # ou não é invertível.
     # A pseudo-inversa é uma generalização da inversa de uma matriz e pode ser usada para resolver
     # sistemas de equações lineares que não têm uma solução única ou que são mal condicionados.
-    return 
+    return np.linalg.pinv(X.T @ X) @ X.T @ y
