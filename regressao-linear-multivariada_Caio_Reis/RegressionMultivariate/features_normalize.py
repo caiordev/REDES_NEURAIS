@@ -27,10 +27,10 @@ def features_normalize_by_std(X):
         - sigma (ndarray): Vetor com os desvios padrão de cada feature.
     """
     # Calcula a média de cada feature (coluna)
-    mu = 
+    mu = np.mean(X, axis=0)
 
     # Calcula o desvio padrão de cada feature (coluna)
-    sigma = 
+    sigma = np.std(X, axis=0, ddof=1)
     
     # Normaliza as features subtraindo a média e dividindo pelo desvio padrão
     # Verifica se sigma é zero (o que indicaria que todas as amostras têm o mesmo valor na feature)
@@ -40,7 +40,7 @@ def features_normalize_by_std(X):
     if np.any(sigma == 0):
         sigma[sigma == 0] = 1
     # Normaliza as features
-    X_norm = 
+    X_norm = (X - mu) / sigma
     return X_norm, mu, sigma
 
 
@@ -61,9 +61,9 @@ def features_normalizes_by_min_max(X):
         - max (ndarray): Vetor com os valores máximos de cada feature.
     """
     # Calcula o mínimo de cada feature (coluna)
-    min = 
+    min = np.min(X, axis=0)
     # Calcula o máximo de cada feature (coluna)
-    max = 
+    max = np.max(X, axis=0)
     # Normaliza as features subtraindo o mínimo e dividindo pela diferença entre máximo e mínimo
     # Verifica se max - min é zero (o que indicaria que todas as amostras têm o mesmo valor na feature)
     # Se max - min for zero, substitui por 1 para evitar divisão por zero
@@ -72,5 +72,5 @@ def features_normalizes_by_min_max(X):
     if np.any(max - min == 0):
         max[min == max] = 1
     # Normaliza as features
-    X_norm = 
+    X_norm = (X - min) / (max - min)
     return X_norm, min, max
