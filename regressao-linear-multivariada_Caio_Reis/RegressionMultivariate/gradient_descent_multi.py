@@ -43,7 +43,7 @@ def gradient_descent_multi(X, y, theta, alpha, num_iters):
 
     # loop para atualizar os parâmetros θ usando o gradiente descendente
     # O loop itera num_iters vezes, atualizando os parâmetros θ a cada iteração
-    for i in range():
+    for i in range(num_iters):
         # calcule o erro entre as previsões e os valores reais
         # O erro é a diferença entre os valores previstos e os valores reais
         error = X @ theta - y
