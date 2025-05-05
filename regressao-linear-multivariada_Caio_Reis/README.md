@@ -168,9 +168,9 @@ Bônus extras serão concedidos pelo uso consistente dos *commit types* abaixo:
 ### Reconhecimentos e Direitos Autorais
 
 ```
-@autor:                [Seu Nome]
-@contato:              [Seu Email]
-@data última versão:   28/04/2025
+@autor:                Caio Reis Batista
+@contato:              caio.reis@discente.ufma.br
+@data última versão:   05/05/2025
 @versão:               2.0
 @outros repositórios:  [URLs opcionais]
 @Agradecimentos:       Universidade Federal do Maranhão (UFMA),
