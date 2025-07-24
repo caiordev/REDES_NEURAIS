@@ -52,8 +52,8 @@ class BackpropagationVisualizer:
         # Treina a rede para coletar o histórico
         self.network.train(x_input, y_target, learning_rate=learning_rate, epochs=epochs)
         
-        # Configuração da figura
-        self.fig = plt.figure(figsize=(15, 10))
+        # Configuração da figura – dimensões maiores para reduzir sobreposição
+        self.fig = plt.figure(figsize=(18, 12))
         self.gs = gridspec.GridSpec(3, 3, height_ratios=[1, 2, 1])
         
         # Subplots
@@ -84,7 +84,7 @@ class BackpropagationVisualizer:
     def draw_network_architecture(self, ax, frame=0):
         """Desenha a arquitetura da rede neural"""
         ax.clear()
-        ax.set_title('Arquitetura da Rede Neural', fontweight='bold', color=COLORS['text'])
+        ax.set_title('Arquitetura da Rede Neural', fontweight='bold', color=COLORS['text'], pad=15)
         ax.set_facecolor(COLORS['background'])
         ax.set_xlim(0, 100)
         ax.set_ylim(0, 100)
@@ -192,11 +192,12 @@ class BackpropagationVisualizer:
                            fontweight='bold', color=COLORS['text'], zorder=5)
                 
                 # Adiciona o valor da ativação dentro do neurônio se disponível
-                if frame < len(self.network.history['activations']):
+                # (para camadas ocultas e saída). Evita apenas a camada de entrada.
+                if l > 0 and frame < len(self.network.history['activations']):
                     if l < len(self.network.history['activations'][frame]):
                         activation = self.network.history['activations'][frame][l][n][0]
-                        ax.text(layer_positions[l], neuron_positions[n], 
-                               f"{activation:.2f}", ha='center', va='center', 
+                        ax.text(layer_positions[l], neuron_positions[n],
+                               f"{activation:.2f}", ha='center', va='center',
                                fontsize=8, color='white', fontweight='bold', zorder=5)
         
         # Adiciona uma legenda para os pesos
@@ -232,27 +233,28 @@ class BackpropagationVisualizer:
         
         # Desenha um diagrama de fluxo do feedforward
         ax.text(50, 95, "Propagação para Frente (Feedforward)", 
-               fontsize=12, fontweight='bold', ha='center', color=COLORS['text'])
+               fontsize=10, fontweight='bold', ha='center', color=COLORS['text'])
         
-        # Desenha as etapas do feedforward com setas
-        steps_y = 85
-        arrow_props = dict(arrowstyle='->', color=COLORS['text'], linewidth=1.5, shrinkA=5, shrinkB=5)
-        
-        # Etapa 1: Multiplicação de pesos
-        ax.text(25, steps_y, "1. Multiplicação de Pesos", ha='center', va='center', 
-               fontweight='bold', bbox=dict(facecolor=COLORS['input_layer'], alpha=0.3, boxstyle='round'))
-        
-        # Etapa 2: Adição de bias
-        ax.text(50, steps_y, "2. Adição de Bias", ha='center', va='center', 
-               fontweight='bold', bbox=dict(facecolor=COLORS['hidden_layer'], alpha=0.3, boxstyle='round'))
-        
-        # Etapa 3: Aplicação da função de ativação
-        ax.text(75, steps_y, "3. Função de Ativação", ha='center', va='center', 
-               fontweight='bold', bbox=dict(facecolor=COLORS['output_layer'], alpha=0.3, boxstyle='round'))
-        
-        # Setas conectando as etapas
-        ax.annotate("", xy=(37.5, steps_y), xytext=(32.5, steps_y), arrowprops=arrow_props)
-        ax.annotate("", xy=(62.5, steps_y), xytext=(57.5, steps_y), arrowprops=arrow_props)
+        # Desenha as etapas principais do feedforward
+        arrow_kwargs = dict(arrowstyle='->', color=COLORS['text'], linewidth=1.2)
+
+        # Passos 1 e 2 no topo
+        top_step_y = 92
+        step_positions = [25, 75]
+        top_steps = [
+            ("1. Multiplicação de Pesos", COLORS['input_layer'], step_positions[0]),
+            ("2. Adição de Bias", COLORS['hidden_layer'], step_positions[1]),
+        ]
+        for txt, color, x in top_steps:
+            ax.text(x, top_step_y, txt, ha='center', va='center', fontweight='bold',
+                    bbox=dict(facecolor=color, alpha=0.3, boxstyle='round,pad=0.4'))
+
+        # Passo 3 – Função de Ativação – posicionado acima da caixa de ativação
+        step3_y = 30
+        ax.text(50, step3_y, "3. Função de Ativação", ha='center', va='center', fontweight='bold',
+                bbox=dict(facecolor=COLORS['output_layer'], alpha=0.3, boxstyle='round,pad=0.4'))
+
+        # --- Fim da seção de passos do feedforward (bloco antigo removido)
         
         # Desenha as equações do feedforward com cores e formatação melhorada
         for l in range(self.network.num_layers - 1):
@@ -739,7 +741,7 @@ class BackpropagationVisualizer:
         # Adiciona um título global com a época atual e estilo melhorado
         plt.suptitle(f'Backpropagation - Época {frame}', 
                     fontsize=16, fontweight='bold', color=COLORS['text'],
-                    y=0.98)
+                    y=0.97)
         
         return (self.ax_network, self.ax_forward, self.ax_error, 
                 self.ax_backward, self.ax_weights, self.ax_loss)
@@ -760,7 +762,7 @@ class BackpropagationVisualizer:
             "Visualização do Algoritmo de Backpropagation em Redes Neurais\n"
             "Mostrando todas as etapas do processo de aprendizado"
         )
-        self.fig.text(0.5, 0.995, description, ha='center', va='top',
+        self.fig.text(0.5, 0.99, description, ha='center', va='top',
                      fontsize=12, color=COLORS['text'], style='italic')
         
         # Adiciona informações sobre a rede no rodapé
